@@ -17,6 +17,7 @@ public class Sprite
     protected double velocityY;
     protected double width;
     protected double height;
+    protected int degRotation;
 
     public Sprite()
     {
@@ -37,6 +38,10 @@ public class Sprite
     {
         Image i = new Image(filename);
         setImage(i);
+    }
+
+    public int getDegRotation() {
+        return degRotation;
     }
 
     public Image getImage() {

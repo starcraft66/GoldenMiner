@@ -3,7 +3,10 @@ package co.tdude.goldenminer;
 import co.tdude.goldenminer.loop.GameLoop;
 import co.tdude.goldenminer.loop.RenderLoop;
 import co.tdude.goldenminer.loop.UpdateLoop;
+import co.tdude.goldenminer.sprites.Hook;
+import co.tdude.goldenminer.sprites.SpriteManager;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -26,8 +29,8 @@ public class GoldenMiner extends Application {
     static Scene mainScene;
     static GraphicsContext graphicsContext;
 
-    static int WIDTH = 800;
-    static int HEIGHT = 600;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 600;
 
     static HashSet<String> currentlyActiveKeys;
     static Image background;
@@ -48,6 +51,11 @@ public class GoldenMiner extends Application {
         Canvas canvas = new Canvas( WIDTH, HEIGHT );
         graphicsContext = canvas.getGraphicsContext2D();
 
+        SpriteManager sm = new SpriteManager();
+        Sprite hook = new Hook();
+
+        sm.addSprite("hook", hook);
+
 
         updateLoop = new UpdateLoop();
         renderLoop = new RenderLoop();
@@ -58,26 +66,29 @@ public class GoldenMiner extends Application {
         Thread renderThread = new Renderer();
         renderThread.start();
 
-        currentlyActiveKeys = new HashSet<String>();
+        InputManager im = InputManager.getInstance();
 
         mainScene.setOnKeyPressed(e ->
         {
-            String code = e.getCode().toString();
-
-            // only add once... prevent duplicates
-            if (!currentlyActiveKeys.contains(code))
-                currentlyActiveKeys.add(code);
+            im.addKey(e.getCode());
         });
 
         mainScene.setOnKeyReleased(e ->
         {
-            String code = e.getCode().toString();
-            currentlyActiveKeys.remove(code);
+            im.removeKey(e.getCode());
         });
 
         root.getChildren().add( canvas );
         theStage.setTitle("Golden Miner");
         theStage.show();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        updateLoop.stop();
+        renderLoop.stop();
+        Platform.exit();
     }
 
     public static GameLoop getUpdateLoop() {

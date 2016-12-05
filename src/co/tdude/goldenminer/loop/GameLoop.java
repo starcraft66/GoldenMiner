@@ -27,7 +27,7 @@ public abstract class GameLoop
             {
                 // assign the time for the next update
                 nextTime += delta;
-                update();
+                update(delta);
                 draw();
             }
             else
@@ -59,6 +59,6 @@ public abstract class GameLoop
 
     public abstract void startup();
     public abstract void shutdown();
-    public abstract void update();
+    public abstract void update(double delta);
     public abstract void draw();
 }
