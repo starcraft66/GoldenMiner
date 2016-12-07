@@ -74,7 +74,7 @@ public class Sprite
 
     public void render(GraphicsContext gc)
     {
-        gc.drawImage( image, positionX, positionY );
+        ImageUtils.drawRotatedImage(gc, image, degRotation, getBoundary().getMinX(), getBoundary().getMinY());
     }
 
     public Rectangle2D getBoundary()

@@ -46,7 +46,6 @@ public class RenderLoop extends GameLoop {
 
     @Override
     public void update(double delta) {
-        Hook hook = (Hook) sm.getSprite("hook");
         sm.getSprites().forEach(sprite -> sprite.update(delta));
     }
 
@@ -57,7 +56,7 @@ public class RenderLoop extends GameLoop {
         gc.drawImage(top, 0,0);
         gc.drawImage(background, 0, 115);
         gc.drawImage(reel, 364, 50);
-        sm.getSprites().forEach(sprite -> ImageUtils.drawRotatedImage(gc, sprite.getImage(),sprite.getDegRotation(), sprite.getBoundary().getMinX(), sprite.getBoundary().getMinY()));
+        sm.getSprites().forEach(sprite -> sprite.render(gc));
         gc.setFont(font);
         gc.fillText("Money", 25, 35);
         gc.fillText("Goal", 25, 75);

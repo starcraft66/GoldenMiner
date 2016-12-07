@@ -3,6 +3,7 @@ package co.tdude.goldenminer;
 import co.tdude.goldenminer.loop.GameLoop;
 import co.tdude.goldenminer.loop.RenderLoop;
 import co.tdude.goldenminer.loop.UpdateLoop;
+import co.tdude.goldenminer.sprites.GoldNugget;
 import co.tdude.goldenminer.sprites.Hook;
 import co.tdude.goldenminer.sprites.SpriteManager;
 import javafx.application.Application;
@@ -55,6 +56,10 @@ public class GoldenMiner extends Application {
         Sprite hook = new Hook();
 
         sm.addSprite("hook", hook);
+        sm.addSprite("nugget1", new GoldNugget());
+        sm.addSprite("nugget2", new GoldNugget());
+        sm.addSprite("nugget3", new GoldNugget());
+        sm.addSprite("nugget4", new GoldNugget());
 
 
         updateLoop = new UpdateLoop();

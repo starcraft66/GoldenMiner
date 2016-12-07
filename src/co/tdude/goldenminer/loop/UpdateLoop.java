@@ -10,11 +10,10 @@ import javafx.scene.canvas.GraphicsContext;
  * Created by tristan on 2016-11-24.
  */
 public class UpdateLoop extends GameLoop {
-    private SpriteManager sm;
+    private SpriteManager sm = SpriteManager.getInstance();
     private GraphicsContext gc = GoldenMiner.getInstance().getGraphicsContext();
 
     public UpdateLoop() {
-        sm = SpriteManager.getInstance();
     }
 
     @Override
@@ -40,7 +39,6 @@ public class UpdateLoop extends GameLoop {
     @Override
     public void update(double delta) {
         if (InputManager.isKeyPressed("SPACE")) {
-
             ((Hook) SpriteManager.getInstance().getSprite("hook")).reel();
         }
     }

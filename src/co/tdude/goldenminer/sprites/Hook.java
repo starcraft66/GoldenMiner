@@ -2,7 +2,9 @@ package co.tdude.goldenminer.sprites;
 
 import co.tdude.goldenminer.GoldenMiner;
 import co.tdude.goldenminer.Sprite;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 /**
  * Created by tristan on 2016-12-01.
@@ -11,6 +13,7 @@ public class Hook extends Sprite {
     protected Direction idleDirection;
     protected Direction reelDirection;
     protected boolean reeling;
+    protected Sprite reelingSprite;
 
     private enum Direction {
         UP,
@@ -40,6 +43,7 @@ public class Hook extends Sprite {
 
         if (reeling && getBoundary().getMinY() < 115) {
             this.reeling = false;
+            SpriteManager.getInstance().removeSprite(reelingSprite);
             this.reelDirection = Direction.DOWN;
             setVelocity(0, 0);
             setPosition(375, 115);
@@ -79,6 +83,25 @@ public class Hook extends Sprite {
 
     }
 
+    @Override
+    public void render(GraphicsContext gc) {
+
+            SpriteManager.getInstance().getSprites().stream()
+                    .filter(sprite -> sprite instanceof GoldNugget)
+                    .map(sprite -> (GoldNugget) sprite)
+                    .filter(sprite -> this.getBoundary().intersects(sprite.getBoundary()))
+                    .forEach(sprite -> {
+                        reelingSprite = sprite;
+                        reelDirection = Direction.UP;
+                        sprite.setVelocity(this.velocityX, this.velocityY);
+                    });
+
+        super.render(gc);
+        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(2);
+        gc.strokeLine(400, 100, getBoundary().getMinX() + (getBoundary().getWidth() / 2), getBoundary().getMinY() + 5);
+    }
+
     public int getDegRotation() {
         return degRotation;
     }
@@ -104,7 +127,5 @@ public class Hook extends Sprite {
         }
 
         reeling = true;
-
-        //Booster
     }
 }

@@ -1,5 +1,7 @@
 package co.tdude.goldenminer.loop;
 
+import javafx.animation.AnimationTimer;
+
 /**
  * Created by tristan on 2016-11-24.
  */
