@@ -15,8 +15,11 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.util.HashSet;
 
 import static javafx.application.Application.launch;
@@ -42,6 +45,11 @@ public class GoldenMiner extends Application {
     private final double FRAMERATE = 60D;
     private final double TICKRATE = 20D;
 
+    private MediaPlayer mediaPlayer;
+    private File musicFile = new File("assets/music.mp3");
+
+    private int score;
+
     @Override
     public void start(Stage theStage) throws Exception{
         Group root = new Group();
@@ -60,6 +68,14 @@ public class GoldenMiner extends Application {
         sm.addSprite("nugget2", new GoldNugget());
         sm.addSprite("nugget3", new GoldNugget());
         sm.addSprite("nugget4", new GoldNugget());
+        sm.addSprite("nugget5", new GoldNugget());
+        sm.addSprite("nugget6", new GoldNugget());
+        sm.addSprite("nugget7", new GoldNugget());
+        sm.addSprite("nugget8", new GoldNugget());
+
+        Media sound = new Media(musicFile.toURI().toString());
+        mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
 
 
         updateLoop = new UpdateLoop();
@@ -94,6 +110,14 @@ public class GoldenMiner extends Application {
         updateLoop.stop();
         renderLoop.stop();
         Platform.exit();
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public static GameLoop getUpdateLoop() {

@@ -58,8 +58,8 @@ public class RenderLoop extends GameLoop {
         gc.drawImage(reel, 364, 50);
         sm.getSprites().forEach(sprite -> sprite.render(gc));
         gc.setFont(font);
-        gc.fillText("Money", 25, 35);
-        gc.fillText("Goal", 25, 75);
-        gc.fillText("Time", 650, 35);
+        gc.fillText("Points: " + gm.getScore(), 25, 35);
+        //gc.fillText("Goal", 25, 75);
+        //gc.fillText("Time", 650, 35);
     }
 }

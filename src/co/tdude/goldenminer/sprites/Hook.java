@@ -45,6 +45,7 @@ public class Hook extends Sprite {
             this.reeling = false;
             SpriteManager.getInstance().removeSprite(reelingSprite);
             this.reelDirection = Direction.DOWN;
+            GoldenMiner.getInstance().setScore(GoldenMiner.getInstance().getScore() + 1);
             setVelocity(0, 0);
             setPosition(375, 115);
         }
@@ -89,7 +90,7 @@ public class Hook extends Sprite {
             SpriteManager.getInstance().getSprites().stream()
                     .filter(sprite -> sprite instanceof GoldNugget)
                     .map(sprite -> (GoldNugget) sprite)
-                    .filter(sprite -> this.getBoundary().intersects(sprite.getBoundary()))
+                    .filter(sprite -> sprite.getBoundary().intersects(this.getBoundary()))
                     .forEach(sprite -> {
                         reelingSprite = sprite;
                         reelDirection = Direction.UP;

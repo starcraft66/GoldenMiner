@@ -2,6 +2,7 @@ package co.tdude.goldenminer.sprites;
 
 import co.tdude.goldenminer.Sprite;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.util.Random;
@@ -23,6 +24,12 @@ public class GoldNugget extends Sprite {
 
     @Override
     public Rectangle2D getBoundary() {
-        return new Rectangle2D(positionX +20,positionY +20,width -20,height -20);
+        return new Rectangle2D(positionX, positionY,width,height);
+    }
+
+    @Override
+    public void render(GraphicsContext gc) {
+        super.render(gc);
+        gc.strokeRect(getBoundary().getMinX(), getBoundary().getMinY(), getBoundary().getWidth(), getBoundary().getHeight());
     }
 }
